@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP Scroll Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 3999px;
+            display: flex;
+            flex-direction: column;
+        }
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 24px;
+padding:20% 0%
+        }
+        .section:nth-child(odd) {
+            background-color: #f0f0f0;
+        }
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #section-3 img {
+            max-width: 100%;
+            height: auto;
+        }
+        #section-5 {
+            background-color: #ffcc99;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <!-- Circle element that will bounce on scroll -->
+    <div class="circle" id="circle"></div>
+
+    <div class="section" id="section-1">Section 1</div>
+    <div class="section" id="section-2">Section 2</div>
+    <div class="section" id="section-3">
+        <p>Section 3</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Paolo_Veronese_008.jpg" alt="The Wedding at Cana">
+    </div>
+    <div class="section" id="section-4">Section 4</div>
+    <div class="section" id="section-5">Section 5</div>
+    <div class="section" id="section-6">Section 6</div>
+    <div class="section" id="section-7">Section 5</div>
+
+
+
+    <script>
+        // GSAP setup
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Circle bouncing animation
+        gsap.to("#circle", {
+            y: "90vh", 
+            duration: 1, 
+            ease: "bounce.out", 
+            repeat: -1, 
+            yoyo: true
+        });
+
+        // ScrollTrigger for pinning section 3
+        ScrollTrigger.create({
+            trigger: "#section-3",
+            start: "top top",
+            end: "bottom center",
+            pin: true,
+            pinSpacing: false,
+        });
+
+        // ScrollTrigger for animating the divs
+        gsap.from(".section", {
+            opacity: 0,
+            duration: 1,
+            stagger: 0.5,
+            scrollTrigger: {
+                trigger: ".section",
+                start: "top 80%",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    </script>
+</body>
+</html>
